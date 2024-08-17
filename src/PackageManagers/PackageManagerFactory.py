@@ -8,13 +8,17 @@ from src.PackageManagers.APK import APK
 class PackageManagerFactory:
     @staticmethod
     def createPackageManager() -> PackageManager:
-        match platform.system():
+        operating_system = platform.system()
+
+        match operating_system:
             case PlatformSystemEnum.LINUX.value:
-                match platform.freedesktop_os_release().get("ID"):
+                linux_distro = platform.freedesktop_os_release().get("ID")
+
+                match linux_distro:
                     case LinuxDistroEnum.CHIMERA.value:
                         return APK()
 
                     case _:
-                        raise ValueError("Linux Distro not supported")
+                        raise ValueError(f"Linux Distro '{linux_distro}' not suported")
             case _:
-                raise ValueError("Operating System not supported")
+                raise ValueError(f"Operating System not '{operating_system}' supported")
