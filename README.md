@@ -11,7 +11,7 @@
   <a href="#credits">Credits</a> •
   <a href="#license">License</a>
 
-  <br>
+  <br><br>
 
   <img src="screenshot.png" alt="screenshot">
 </p>
