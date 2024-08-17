@@ -65,6 +65,7 @@ class OSFreedomScore:
         non_score = len(non_approved_packages) / len(self.packages) * 100
 
         report = f"""\
+OS Freedom Score: {(100 - non_score):.2f}%
 Open Source Initiative Score: {osi_score:.2f}%
 Free Software Fundation Score: {fsf_score:.2f}%
 Non-Approved Score: {non_score:.2f}%
