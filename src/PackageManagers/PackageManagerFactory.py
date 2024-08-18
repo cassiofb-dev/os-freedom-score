@@ -25,6 +25,6 @@ class PackageManagerFactory:
                         return Pacman()
 
                     case _:
-                        raise ValueError(f"Linux Distro '{linux_distro}' not suported")
+                        raise ValueError(f"Linux Distro not '{linux_distro}' suported")
             case _:
                 raise ValueError(f"Operating System not '{operating_system}' supported")

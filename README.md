@@ -34,7 +34,9 @@ python -m src.main
 
 ## Todo
 
-- [ ] Add suport for [Pacman](https://wiki.archlinux.org/title/Pacman)
+- [x] Add suport for [Pacman](https://wiki.archlinux.org/title/Pacman)
+  - [x] Add support for non SPDX compliant package managers
+- [ ] Add suport for [Flatpak](https://flathub.org/)
 - [ ] Use GNU license list data
 - [ ] Improve the license classification method
 

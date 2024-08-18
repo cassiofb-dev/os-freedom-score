@@ -9,6 +9,13 @@ class APK(PackageManager):
     - https://wiki.alpinelinux.org/wiki/Alpine_Package_Keeper
     """
 
+    def __init__(self):
+        self._is_spdx_compliant = True
+
+    @property
+    def is_spdx_compliant(self) -> bool:
+        return self._is_spdx_compliant
+
     def packages(self) -> list[Package]:
         command = "apk list -I | grep -oh '{.*)' | sort -u"
         result = subprocess.check_output(

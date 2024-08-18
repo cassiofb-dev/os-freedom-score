@@ -9,6 +9,13 @@ class Pacman(PackageManager):
     - https://wiki.archlinux.org/title/Pacman
     """
 
+    def __init__(self):
+        self._is_spdx_compliant = False
+
+    @property
+    def is_spdx_compliant(self) -> bool:
+        return self._is_spdx_compliant
+
     def packages(self) -> list[Package]:
         command = "pacman -Qi | grep -E '(Licenses        :)|(Name            :)'"
         result = subprocess.check_output(
