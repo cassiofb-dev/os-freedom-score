@@ -8,3 +8,4 @@ class LinuxDistroEnum(Enum):
     """
 
     CHIMERA = "chimera"
+    CACHYOS = "cachyos"

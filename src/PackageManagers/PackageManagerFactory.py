@@ -3,7 +3,9 @@ import platform
 from src.PackageManagers.PackageManager import PackageManager
 from src.Enums.PlatformSystemEnum import PlatformSystemEnum
 from src.Enums.LinuxDistroEnum import LinuxDistroEnum
+
 from src.PackageManagers.APK import APK
+from src.PackageManagers.Pacman import Pacman
 
 class PackageManagerFactory:
     @staticmethod
@@ -17,6 +19,10 @@ class PackageManagerFactory:
                 match linux_distro:
                     case LinuxDistroEnum.CHIMERA.value:
                         return APK()
+
+                match linux_distro:
+                    case LinuxDistroEnum.CACHYOS.value:
+                        return Pacman()
 
                     case _:
                         raise ValueError(f"Linux Distro '{linux_distro}' not suported")
