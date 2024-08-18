@@ -8,12 +8,9 @@
   <a href="#about">About</a> •
   <a href="#usage">Usage</a> •
   <a href="#todo">Todo</a> •
+  <a href="#screenshots">Screenshots</a> •
   <a href="#credits">Credits</a> •
   <a href="#license">License</a>
-
-  <br><br>
-
-  <img src="screenshot.png" alt="screenshot">
 </p>
 
 ## About
@@ -39,6 +36,18 @@ python -m src.main
 - [ ] Add suport for [Flatpak](https://flathub.org/)
 - [ ] Use GNU license list data
 - [ ] Improve the license classification method
+
+## Screenshots
+
+### APK - Chimera Linux
+
+![APK - Chimera Linux](./data/chimera.png)
+
+---
+
+### Pacman - CachyOS
+
+![Pacman - CachyOS](./data/cachyos.png)
 
 ## Credits
 
