@@ -37,49 +37,39 @@ class OSFreedomScore:
             self.spdx_licenses = licenses
 
     def __classifyPackages(self):
-        if self.package_manager.is_spdx_compliant:
-            self.__classifySpdxCompliantPackages()
-            return
+        for package in self.packages:
+            if 'meta' in package.license:
+                package.is_free = True
+                package.is_fsf_libre = True
+                package.is_osi_approved = True
 
-        if not self.package_manager.is_spdx_compliant:
-            self.__classifyNonSpdxCompliantPackages()
-            return
+        self.__classifySpdxCompliantPackages()
+        self.__classifyNonSpdxCompliantPackages()
 
     def __classifySpdxCompliantPackages(self):
         for package in self.packages:
-            if 'meta' in package.license:
-                package.is_osi_approved = True
-                package.is_fsf_libre = True
-                continue
-
             for license in self.spdx_licenses:
                 if license.license_id in package.license:
                     if license.is_osi_approved:
                         package.is_osi_approved = True
+                        package.is_free = True
                     if license.is_fsf_libre:
                         package.is_fsf_libre = True
+                        package.is_free = True
 
     def __classifyNonSpdxCompliantPackages(self):
-        # Even though the package manager is not SPDX compliant, we can still classify some licenses
-        self.__classifySpdxCompliantPackages()
-
         for package in self.packages:
-            if 'meta' in package.license:
-                package.is_osi_approved = True
-                package.is_fsf_libre = True
+            if package.is_free:
                 continue
 
             for license in self.free_non_spdx_compliant_licenses:
                 if license in package.license:
-                    package.is_osi_approved = True
-                    package.is_fsf_libre = True
+                    package.is_free = True
                     continue
 
             for package_name in self.free_non_spdx_compliant_packages:
-                if package_name in package.name:
-                    package.is_osi_approved = True
-                    package.is_fsf_libre = True
-
+                if package_name == package.name:
+                    package.is_free = True
 
     def getOsiApprovedPackages(self) -> list[Package]:
         return [package for package in self.packages if package.is_osi_approved]
@@ -87,44 +77,45 @@ class OSFreedomScore:
     def getFsfLibrePackages(self) -> list[Package]:
         return [package for package in self.packages if package.is_fsf_libre]
 
-    def getNonApprovedPackages(self) -> list[Package]:
-        return [package for package in self.packages if not package.is_osi_approved and not package.is_fsf_libre]
+    def getFreePackages(self) -> list[Package]:
+        return [package for package in self.packages if package.is_free]
+
+    def getNonFreePackages(self) -> list[Package]:
+        return [package for package in self.packages if not package.is_free]
 
     def getReport(self) -> str:
         osi_approved_packages = self.getOsiApprovedPackages()
         fsf_libre_packages = self.getFsfLibrePackages()
-        non_approved_packages = self.getNonApprovedPackages()
+        free_packages = self.getFreePackages()
         fsf_score = len(fsf_libre_packages) / len(self.packages) * 100
         osi_score = len(osi_approved_packages) / len(self.packages) * 100
-        non_score = len(non_approved_packages) / len(self.packages) * 100
+        free_score = len(free_packages) / len(self.packages) * 100
 
         report = f"""\
-OS Freedom Score: {(100 - non_score):.2f}%
+OS Freedom Score: {free_score:.2f}%
 Open Source Initiative Score: {osi_score:.2f}%
 Free Software Fundation Score: {fsf_score:.2f}%
-Non-Approved Score: {non_score:.2f}%
+Non-Free Score: {(100 - free_score):.2f}%
 
 --- Details ---
 
 Total Packages: {len(self.packages)}
+Free Packages: {len(free_packages)}
 OSI Approved Packages: {len(osi_approved_packages)}
 FSF Libre Packages: {len(fsf_libre_packages)}
-Non-Approved Packages: {len(non_approved_packages)}"""
-
-        if not self.package_manager.is_spdx_compliant:
-            report = 'Warning: Non SPDX compliant package manager, results may be wrong!\n\n' + report
+Non-Free Packages: {len(self.packages) - len(free_packages)}"""
 
         return report
 
-    def getNonApprovedPackagesList(self) -> str:
-        non_approved_packages = self.getNonApprovedPackages()
-        non_approved_packages_list = """\
---- Non-Approved Packages ---
+    def getNonFreePackagesList(self) -> str:
+        non_free_packages = self.getNonFreePackages()
+        non_free_packages_list = """\
+--- Non-Free Packages ---
 
 """
-        for package in non_approved_packages:
-            non_approved_packages_list += f"{package.name} - {package.license}\n"
-        return non_approved_packages_list
+        for package in non_free_packages:
+            non_free_packages_list += f"{package.name} - {package.license}\n"
+        return non_free_packages_list
 
     def __initFreeNonSpdxCompliantLicenses(self):
         self.free_non_spdx_compliant_licenses = [
@@ -135,10 +126,34 @@ Non-Approved Packages: {len(non_approved_packages)}"""
             'LGPL',
             'CDDL',
             'Apache',
+            'PSF-2.0',
         ]
 
     def __initFreeNonSpdxCompliantPackages(self):
         self.free_non_spdx_compliant_packages = [
-            'xorg',
-            'openssh',
+            'xorg', # MIT-like license
+            'libgd', # BSD-like license
+            'bzip2', # BSD-like license
+            'jasper', # MIT-like license
+            'libpng', # zlib-like license
+            'sqlite', # Public domain
+            'snooze', # Public domain
+
+            'tzdata', # Public domain
+            'tzutils', # Public domain
+
+            'libtiff', # BSD-like license
+            'fdk-aac', # Unclear but free for FSF
+            'openssh', # BSD-like license
+            'libmodplug', # Public domain
+            'imagemagick', # GPL Compatible
+            'fonts-dejavu', # Public domain
+            'python-random2', # PSF-2.0 is on OSI list
+            'dnssec-anchors', # Public domain
+
+            'pam', # BSD-like license
+            'linux-pam', # BSD-like license
+            'linux-pam-base', # BSD-like license
+
+            'mobile-broadband-provider-info', # Public domain
         ]

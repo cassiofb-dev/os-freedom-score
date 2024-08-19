@@ -31,11 +31,26 @@ python -m src.main
 
 ## Todo
 
-- [x] Add suport for [Pacman](https://wiki.archlinux.org/title/Pacman)
-  - [x] Add support for non SPDX compliant package managers
+- [ ] Add suport for [Pacman](https://wiki.archlinux.org/title/Pacman)
+  - [ ] Arch Linux
+  - [x] CachyOS
+- [ ] Linux Support
+  - [ ] Add suport for [APK](https://wiki.alpinelinux.org/wiki/Alpine_Package_Keeper)
+    - [ ] Alpine Linux
+    - [x] Chimera Linux
+  - [ ] Add suport for [APT](https://wiki.debian.org/PackageManagement)
+    - [ ] Debian
+    - [ ] Ubuntu
+    - [ ] Pop!_OS
+    - [ ] Mint
+  - [ ] Add suport for [DNF](https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/package-management/DNF/)
+    - [ ] Fedora
+    - [ ] RHEL
 - [ ] Add suport for [Flatpak](https://flathub.org/)
 - [ ] Use GNU license list data
-- [ ] Improve the license classification method
+- [x] Improve the license classification method
+  - [x] Handle non spdx compliant licenses
+  - [x] Handle non spdx compliant softwares
 
 ## Screenshots
 
