@@ -114,7 +114,7 @@ Non-Free Packages: {len(self.packages) - len(free_packages)}"""
 
 """
         for package in non_free_packages:
-            non_free_packages_list += f"{package.name} - {package.license}\n"
+            non_free_packages_list += f"'{package.name}',\n"
         return non_free_packages_list
 
     def __initFreeNonSpdxCompliantLicenses(self):
@@ -123,30 +123,65 @@ Non-Free Packages: {len(self.packages) - len(free_packages)}"""
             'BSD',
             'GPL',
             'OFL',
+            'PSF',
+            'SIL',
+            'zlib',
+            'ZLIB',
             'LGPL',
             'CDDL',
             'Apache',
             'PSF-2.0',
+            'XFREE86',
+            'isc-dhcp',
+            'Sleepycat',
+            'PerlArtistic',
+            'Public Domain',
+            'LicenseRef-Java',
         ]
 
     def __initFreeNonSpdxCompliantPackages(self):
         self.free_non_spdx_compliant_packages = [
             'xorg', # MIT-like license
+            'xorg-xset', # MIT-like license
+            'xorg-xrdb', # MIT-like license
+            'xorg-xprop', # MIT-like license
+            'xorg-xinit', # MIT-like license
+            'xorg-xkill', # MIT-like license
+            'xorg-xrandr', # MIT-like license
+            'xorg-xinput', # MIT-like license
+            'xorg-xkbcomp', # MIT-like license
+            'xorg-xmodmap', # MIT-like license
+            'xorg-xdpyinfo', # MIT-like license
+            'xorg-setxkbmap', # MIT-like license
+            'xkeyboard-config', # MIT-like license
+            'xorg-fonts-encodings', # MIT-like license
+
             'libgd', # BSD-like license
             'bzip2', # BSD-like license
             'jasper', # MIT-like license
             'libpng', # zlib-like license
             'sqlite', # Public domain
             'snooze', # Public domain
+            'libmng', # FSF approved
+            'libavif', # BSD-like license
 
             'tzdata', # Public domain
             'tzutils', # Public domain
 
+            'libyuv', # BSD-like license
+            'libsasl', # BSD-like license   
             'libtiff', # BSD-like license
             'fdk-aac', # Unclear but free for FSF
+            'libxext', # MIT-like license
             'openssh', # BSD-like license
+            'libvdpau', # MIT-like license
+            'licenses', # Public domain
+            'libxrandr', # MIT-like license
+            'libtommath', # Public domain
             'libmodplug', # Public domain
+            'libxkbfile', # MIT-like license
             'imagemagick', # GPL Compatible
+            'libpciaccess', # MIT-like license
             'fonts-dejavu', # Public domain
             'python-random2', # PSF-2.0 is on OSI list
             'dnssec-anchors', # Public domain
