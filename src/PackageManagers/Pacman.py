@@ -1,4 +1,4 @@
-import subprocess, re
+import subprocess
 
 from src.Classes.Package import Package
 from src.PackageManagers.PackageManager import PackageManager
@@ -12,7 +12,7 @@ class Pacman(PackageManager):
     def packages(self) -> list[Package]:
         command = "pacman -Qi | grep -E '(Licenses        :)|(Name            :)'"
         result = subprocess.check_output(
-            command,
+            args=command,
             shell=True,
             text=True,
         )
@@ -24,7 +24,12 @@ class Pacman(PackageManager):
             package_name = result_lines[line_index * 2]
             package_license = result_lines[line_index * 2 + 1]
 
-            package = Package(name=package_name[18:], license=package_license[18:])
+            package = Package(
+                name=package_name[18:],
+                license=package_license[18:],
+                package_manager=self.__class__.__name__,
+            )
+
             packages.append(package)
 
         return packages

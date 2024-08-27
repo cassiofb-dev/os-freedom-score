@@ -14,9 +14,12 @@ class OSFreedomScore:
         self.__classifyPackages()
 
     def __initPackages(self):
-        package_manager = PackageManagerFactory.createPackageManager()
-        self.package_manager = package_manager
-        self.packages = self.package_manager.packages()
+        package_managers = PackageManagerFactory.createPackageManagers()
+        self.package_managers = package_managers
+        self.packages = []
+        for package_manager in package_managers:
+            for package in package_manager.packages():
+                self.packages.append(package)
 
     def __initSpdxLicenses(self):
         with open("./data/spdx-licenses.json", "r") as file:
@@ -116,6 +119,19 @@ Non-Free Packages: {len(self.packages) - len(free_packages)}"""
         for package in non_free_packages:
             non_free_packages_list += f"'{package.name}',\n"
         return non_free_packages_list
+
+    def getNonFreePackagesReport(self) -> str:
+        non_free_packages = self.getNonFreePackages()
+        non_free_packages_report = """\
+--- Non-Free Packages ---
+
+"""
+        for package in non_free_packages:
+            non_free_packages_report += f"Name: {package.name}\n"
+            non_free_packages_report += f"License: {package.license}\n"
+            non_free_packages_report += f"Source: {package.package_manager}\n"
+            non_free_packages_report += "---\n"
+        return non_free_packages_report
 
     def __initFreeNonSpdxCompliantLicenses(self):
         self.free_non_spdx_compliant_licenses = [

@@ -6,23 +6,28 @@ from src.Enums.LinuxDistroEnum import LinuxDistroEnum
 
 from src.PackageManagers.APK import APK
 from src.PackageManagers.Pacman import Pacman
+from src.PackageManagers.Flatpak import Flatpak
 
 class PackageManagerFactory:
     @staticmethod
-    def createPackageManager() -> PackageManager:
-        operating_system = platform.system()
+    def createPackageManagers() -> list[PackageManager]:
+        package_managers = []
 
+        operating_system = platform.system()
         match operating_system:
             case PlatformSystemEnum.LINUX.value:
-                linux_distro = platform.freedesktop_os_release().get("ID")
+                package_managers.append(Flatpak())
 
+                linux_distro = platform.freedesktop_os_release().get("ID")
                 match linux_distro:
                     case LinuxDistroEnum.CHIMERA.value:
-                        return APK()
+                        package_managers.append(APK())
+                        return package_managers
 
                 match linux_distro:
                     case LinuxDistroEnum.CACHYOS.value:
-                        return Pacman()
+                        package_managers.append(Pacman())
+                        return package_managers
 
                     case _:
                         raise ValueError(f"Linux Distro not '{linux_distro}' suported")

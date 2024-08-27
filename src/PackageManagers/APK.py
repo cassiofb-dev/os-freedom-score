@@ -27,7 +27,12 @@ class APK(PackageManager):
             package_name = re.findall(pattern=r'{.*}', string=line).pop()
             package_license = re.findall(pattern=r'\(.*\)', string=line).pop()
 
-            package = Package(name=package_name[1:-1], license=package_license[1:-1])
+            package = Package(
+                name=package_name[1:-1],
+                license=package_license[1:-1],
+                package_manager=self.__class__.__name__,
+            )
+
             packages.append(package)
 
         return packages

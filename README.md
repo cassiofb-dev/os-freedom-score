@@ -46,7 +46,7 @@ python -m src.main
   - [ ] Add suport for [DNF](https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/package-management/DNF/)
     - [ ] Fedora
     - [ ] RHEL
-- [ ] Add suport for [Flatpak](https://flathub.org/)
+- [x] Add suport for [Flatpak](https://flathub.org/)
 - [ ] Use GNU license list data
 - [x] Improve the license classification method
   - [x] Handle non spdx compliant licenses
