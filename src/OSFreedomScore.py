@@ -167,7 +167,6 @@ Non-Free Packages: {len(self.packages) - len(free_packages)}"""
 
             'tzdata', # Public domain
             'tzutils', # Public domain
-
             'libyuv', # BSD-like license
             'libsasl', # BSD-like license   
             'libtiff', # BSD-like license
@@ -180,10 +179,13 @@ Non-Free Packages: {len(self.packages) - len(free_packages)}"""
             'libtommath', # Public domain
             'libmodplug', # Public domain
             'libxkbfile', # MIT-like license
+            'oci-runtime', # Apache-2.0
             'imagemagick', # GPL Compatible
             'libpciaccess', # MIT-like license
             'fonts-dejavu', # Public domain
             'python-random2', # PSF-2.0 is on OSI list
+
+            'dns-root-data', # Public domain
             'dnssec-anchors', # Public domain
 
             'pam', # BSD-like license
