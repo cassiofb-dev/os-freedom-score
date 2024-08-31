@@ -51,6 +51,7 @@ class Flatpak(PackageManager):
                 args="which flatpak",
                 shell=True,
                 text=True,
+                stderr=subprocess.DEVNULL,
             )
 
             return True
